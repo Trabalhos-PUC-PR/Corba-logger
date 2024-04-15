@@ -41,6 +41,7 @@ class  Logger_i
 {
 public:
 	bool isVerbose;
+	short counter;
   // Constructor
   Logger_i ();
 
@@ -61,6 +62,9 @@ public:
     ::CORBA::UShort pid,
     const std::string hora,
     const std::string msg);
+  
+	virtual
+  ::CORBA::UShort count ();
 };
 
 

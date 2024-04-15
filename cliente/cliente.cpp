@@ -48,7 +48,8 @@ int main(int argc, char* argv[])
 			}else if (cmd == "log"){
 				const auto now = std::chrono::system_clock::now();
 				logger->log(Severidade::ERROR, "127.0.0.1:4200", 12, format("{:%d-%m-%Y %H:%M:%OS}", now), "Erro no angular!");
-			}
+			}else if (cmd == "count"){
+				cout << logger->count() << endl;
 		} while (cmd != "fim");
 		// 3. Usa log
 		orb->destroy();

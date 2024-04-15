@@ -34,6 +34,7 @@
 // Implementation skeleton constructor
 Logger_i::Logger_i ()
 {
+	counter = 0;
 	isVerbose = false;
 }
 
@@ -53,6 +54,8 @@ void Logger_i::verbose (
 	isVerbose = verbose;
 }
 
+
+
 void Logger_i::log (
   ::Severidade severidade,
   const std::string endereco,
@@ -60,7 +63,7 @@ void Logger_i::log (
   const std::string hora,
   const std::string msg)
 {
-	
+	counter++;
 	if(verbose()){
 		std::string severidade_str;
 		switch (severidade) {
@@ -88,5 +91,9 @@ void Logger_i::log (
 		std::cout << msg << std::endl;
 	}
 
+}
+
+::CORBA::UShort Logger_i::count (){
+	return counter;
 }
 
