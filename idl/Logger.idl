@@ -10,7 +10,7 @@ enum Severidade {
 interface Logger {
 
 	attribute boolean verbose;
-	attribute readonly unsigned short count;
+  readonly attribute  unsigned short count;
 
 	void log(
 		in Severidade severidade,
