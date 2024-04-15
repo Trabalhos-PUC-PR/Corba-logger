@@ -9,10 +9,15 @@
 #include <fstream>
 #include <string>
 #include "LoggerI.h"
+#include "tao/String_Alloc.h"
+#include <orbsvcs/CosNamingC.h>
 
 using namespace std;
+using namespace CORBA;
+using namespace PortableServer;
+using namespace CosNaming;
 
-CORBA::ORB_var orb = CORBA::ORB::_nil();
+ORB_var orb = ORB::_nil();
 
 int main(int argc, char* argv[])
 {
@@ -26,15 +31,15 @@ int main(int argc, char* argv[])
 
 		// 1. Inicia ORB
 		cout << "Inciando ORB" << endl;
-		orb = CORBA::ORB_init(argc,argv,"ORB");
+		orb = ORB_init(argc,argv,"orb");
 
 		// 2. Ativa RootPOA
 	    cout <<  "Ativando RootPOA" << endl;
-		PortableServer::POA_var root_poa;
-		CORBA::Object_ptr tmp_ref;
+		POA_var root_poa;
+		Object_ptr tmp_ref;
 		tmp_ref = orb->resolve_initial_references("RootPOA");
-		root_poa = PortableServer::POA::_narrow(tmp_ref); // safe casting
-		PortableServer::POAManager_var poa_manager = root_poa->the_POAManager();
+		root_poa = POA::_narrow(tmp_ref); // safe casting
+		POAManager_var poa_manager = root_poa->the_POAManager();
 		poa_manager->activate();
 
 		// 3. Instancia "servants"
@@ -45,9 +50,17 @@ int main(int argc, char* argv[])
 		cout << "Registrando servos no POA (criando objetos CORBA)" << endl;
 		Logger_var logger = logger_i._this(); // returns reference to the object
 
+		tmp_ref = orb->resolve_initial_references("NameService");
+		NamingContext_var sn = NamingContext::_narrow(tmp_ref);
+
+		Name nome(1);
+		nome.length(1);
+		nome[0].id = string_dup(argv[1]);
+		sn->rebind(nome, logger.in());
+		cout << argv[1] << " publicado\n";
 		// 5. Publica IOR
 		cout <<  "Publicando IOR (arquivo \"" << argv[1] << "\")" << endl;
-		CORBA::String_var ior = orb->object_to_string(logger.in());
+		String_var ior = orb->object_to_string(logger.in());
 		ofstream arq_ior(argv[1]);
 		arq_ior << ior << endl;
 		arq_ior.close();
@@ -60,7 +73,7 @@ int main(int argc, char* argv[])
 		root_poa->destroy(true,true);
 		orb->destroy();
 
-    } catch (CORBA::Exception& e) {
+    } catch (Exception& e) {
 		cerr << "CORBA exception: " << e << endl;
     }
 

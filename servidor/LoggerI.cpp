@@ -27,11 +27,9 @@
 
 #include "LoggerI.h"
 #include "LoggerC.h"
+#include <cstdio>
 #include <string>
 #include <iostream>
-
-using namespace std;
-
 
 // Implementation skeleton constructor
 Logger_i::Logger_i ()
@@ -64,7 +62,7 @@ void Logger_i::log (
 {
 	
 	if(verbose()){
-		string severidade_str;
+		std::string severidade_str;
 		switch (severidade) {
 			case(DEBUG):
 				severidade_str = "DEBUG";
@@ -79,16 +77,15 @@ void Logger_i::log (
 				severidade_str = "CRITICAL";
 				break;
 		}
-		 cout << severidade_str;
-		 cout << "> ";
-		 cout << pid;
-		 cout << "@" ;
-		 cout << endereco;
-		 cout << " - [";
-		 cout << hora;
-		 cout << "] - ";
-		 cout << msg;
-		
+		std::cout << severidade_str;
+		std::cout << " > pid:";
+		std::cout << pid;
+		std::cout << " @" ;
+		std::cout << endereco;
+		std::cout << " - [";
+		std::cout << hora;
+		std::cout << "] - ";
+		std::cout << msg << std::endl;
 	}
 
 }
