@@ -1,6 +1,6 @@
 [
  {
-  "directory": "/home/andre.kovalski/aulas/corba/Logger/servidor",
+  "directory": "/home/andre.kovalski/aulas/corba/Corba-logger/servidor",
   "arguments": [
    "g++",
    "-D_GNU_SOURCE",
@@ -20,7 +20,7 @@
   "file": "../idl/LoggerC.cpp"
  },
  {
-  "directory": "/home/andre.kovalski/aulas/corba/Logger/servidor",
+  "directory": "/home/andre.kovalski/aulas/corba/Corba-logger/servidor",
   "arguments": [
    "g++",
    "-D_GNU_SOURCE",
@@ -40,7 +40,7 @@
   "file": "LoggerI.cpp"
  },
  {
-  "directory": "/home/andre.kovalski/aulas/corba/Logger/servidor",
+  "directory": "/home/andre.kovalski/aulas/corba/Corba-logger/servidor",
   "arguments": [
    "g++",
    "-D_GNU_SOURCE",
@@ -60,7 +60,7 @@
   "file": "servidor.cpp"
  },
  {
-  "directory": "/home/andre.kovalski/aulas/corba/Logger/servidor",
+  "directory": "/home/andre.kovalski/aulas/corba/Corba-logger/servidor",
   "arguments": [
    "g++",
    "-D_GNU_SOURCE",
