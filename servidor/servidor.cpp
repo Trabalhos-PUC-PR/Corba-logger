@@ -1,56 +1,68 @@
+//
+// SERVIDOR DE CONTA SIMPLES
+// Arquitetura de Sistemas Distribuídos, Paralelos e Concorrentes
+// Escola Politécnica -- PUCPR
+// Prof. Luiz Lima Jr. (laplima@ppgia.pucpr.br)
+//
+
 #include <iostream>
 #include <fstream>
+#include <string>
 #include "LoggerI.h"
-#include "tao/IFR_Client_Adapter.h"
-#include "tao/String_Alloc.h"
-#include <orbsvcs/CosNamingC.h>
 
 using namespace std;
-using namespace CORBA;
-using namespace PortableServer;
-using namespace CosNaming;
+
+CORBA::ORB_var orb = CORBA::ORB::_nil();
 
 int main(int argc, char* argv[])
 {
-	try {
+    // Verifica parametros da linha de comando
+    if (argc < 2) {
+		cerr << "USO: " << argv[0] << " <arq_ior>" << endl;
+		return 1;
+    }
+
+    try {
+
 		// 1. Inicia ORB
-		ORB_var orb = ORB_init(argc, argv, "ORB");
-		
+		cout << "Inciando ORB" << endl;
+		orb = CORBA::ORB_init(argc,argv,"ORB");
+
 		// 2. Ativa RootPOA
-		POA_var root_poa;
-		Object_ptr tmp_ref;
+	    cout <<  "Ativando RootPOA" << endl;
+		PortableServer::POA_var root_poa;
+		CORBA::Object_ptr tmp_ref;
 		tmp_ref = orb->resolve_initial_references("RootPOA");
-		root_poa = POA::_narrow(tmp_ref);
-		auto poa_manager = root_poa->the_POAManager();
+		root_poa = PortableServer::POA::_narrow(tmp_ref); // safe casting
+		PortableServer::POAManager_var poa_manager = root_poa->the_POAManager();
 		poa_manager->activate();
 
 		// 3. Instancia "servants"
-		Logger_i log_i;
+		cout << "Instanciando servant" << endl;
+		auto acc_i(argv[1]); // account name = ior file name
 
 		// 4. Registra servos no POA, criando objetos distribuídos
-		auto account = log_i._this();
+		cout << "Registrando servos no POA (criando objetos CORBA)" << endl;
+		auto account = acc_i._this; // returns reference to the object
 
-		// 5. Publica iostream
+		// 5. Publica IOR
+		cout <<  "Publicando IOR (arquivo \"" << argv[1] << "\")" << endl;
+		CORBA::String_var ior = orb->object_to_string(account.in());
+		ofstream arq_ior(argv[1]);
+		arq_ior << ior << endl;
+		arq_ior.close();
 
-		// 5.2. Conectar com servidor de nomes
-		tmp_ref = orb->resolve_initial_references("NameService");
-		auto sn = NamingContext::_narrow(tmp_ref);
-
-		Name nome(1);
-		nome.length(1);
-		nome[0].id = string_dup(argv[1]);
-
-		// 6. Aguarda reqs
+		// 6. Aguarda requisições
+		cout << "Aguardando requisicoes...\n" << endl;
 		orb->run();
 
 		// 7. Finaliza
-		root_poa->destroy(true, true);
+		root_poa->destroy(true,true);
 		orb->destroy();
 
-		
-	} catch (const Exception& e) {
-		cerr << "erro corba: " << e << endl;
-	}
+    } catch (CORBA::Exception& e) {
+		cerr << "CORBA exception: " << e << endl;
+    }
 
     return 0;
 }
