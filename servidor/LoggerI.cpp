@@ -32,13 +32,11 @@
 
 using namespace std;
 
-bool verbose_state;
-string severidade_str;
 
 // Implementation skeleton constructor
 Logger_i::Logger_i ()
 {
-	verbose_state = false;
+	isVerbose = false;
 }
 
 // Implementation skeleton destructor
@@ -48,13 +46,13 @@ Logger_i::~Logger_i ()
 
 ::CORBA::Boolean Logger_i::verbose ()
 {
-	return verbose_state;
+	return isVerbose;
 }
 
 void Logger_i::verbose (
   ::CORBA::Boolean verbose)
 {
-	verbose_state = verbose;
+	isVerbose = verbose;
 }
 
 void Logger_i::log (
@@ -66,6 +64,7 @@ void Logger_i::log (
 {
 	
 	if(verbose()){
+		string severidade_str;
 		switch (severidade) {
 			case(DEBUG):
 				severidade_str = "DEBUG";
@@ -81,6 +80,7 @@ void Logger_i::log (
 				break;
 		}
 		 cout << severidade_str;
+		 cout << "> ";
 		 cout << pid;
 		 cout << "@" ;
 		 cout << endereco;

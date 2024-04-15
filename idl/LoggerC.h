@@ -25,8 +25,8 @@
 // TAO_IDL - Generated from
 // /opt/ACE_wrappers/TAO/TAO_IDL/be/be_codegen.cpp:148
 
-#ifndef _TAO_IDL_LOGGERC_QR7ZAE_H_
-#define _TAO_IDL_LOGGERC_QR7ZAE_H_
+#ifndef _TAO_IDL_LOGGERC_ILLU34_H_
+#define _TAO_IDL_LOGGERC_ILLU34_H_
 
 
 #include /**/ "ace/config-all.h"

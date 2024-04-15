@@ -40,6 +40,7 @@ class  Logger_i
   : public virtual POA_Logger
 {
 public:
+	bool isVerbose;
   // Constructor
   Logger_i ();
 
