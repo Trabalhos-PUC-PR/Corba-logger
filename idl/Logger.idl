@@ -1,3 +1,5 @@
+// André Luiz Kovalski - Leonardo Matthew Knight
+
 enum Severidade {
 	DEBUG,
 	WARNING,
