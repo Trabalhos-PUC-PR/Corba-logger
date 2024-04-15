@@ -1,50 +1,47 @@
 //
 // CLIENTE DE CONTA BANCÁRIA SIMPLES
 //
-// Sistemas Distribuídos
+// Arquitetura de Sistemas Distribuídos, Paralelos e Concorrentes
 // Escola Politécnica -- PUCPR
-// (C) Prof. Luiz Lima Jr. (luiz.lima@pucpr.br)
+// Prof. Luiz Lima Jr. (laplima@ppgia.pucpr.br)
 //
 
 #include <iostream>
+#include <string>
 #include "LoggerC.h"
-#include "tao/String_Alloc.h"
-#include <orbsvcs/CosNamingC.h>
+#include "LoggerI.h"
 
 using namespace std;
-using namespace CORBA;
-using namespace CosNaming;
 
 int main(int argc, char* argv[])
 {
 	if (argc < 2) {
-		cerr << "USO: "<<argv[0]<<" file://<ior_file>"<<endl;
+		cerr << "USAGE: " << argv[0] << " file://<ior_file>" << endl;
+		return 1;
 	}
 
 	try {
-		// 1. Inicializa ORB
-		ORB_var orb = ORB_init(argc, argv, "ORB");
+		// 1. Initiate ORB
+		CORBA::ORB_var orb = CORBA::ORB_init(argc,argv,"ORB");
 
-		// 2. Obtém referêencia para o objeto distribuido
-		Object_ptr ref;
-		Logger_var log;
+		// 2. Obtain object reference
+		CORBA::Object_ptr tmp_ref;
+		Logger_var account;
 
-		ref = orb->string_to_object(argv[1]);
-		NamingContext_var sn = NamingContext::_narrow(ref);
+		tmp_ref = orb->string_to_object(argv[1]);
+		account = Logger::_narrow(tmp_ref);
 
-		Name nome(1);
-		nome.length(1);
-		nome[0].id = string_dup(argv[1]);
+		// 3. Use account
+		string command;
 
-		ref = sn->resolve(nome);
-
-		log = Logger::_narrow(ref);
-
-		// 3. Usa log
+		account->log(Severidade::DEBUG, "end", 12, "hora", "msg");
 
 
+		// 4. Destroi ORB
+		orb->destroy();
 	} catch (CORBA::Exception& e) {
-		cerr << "CORBA EXCEPTION: "<<e<<endl;
+		cerr << "CORBA EXCEPTION:" << e << endl;
 	}
 
+	return 0;
 }

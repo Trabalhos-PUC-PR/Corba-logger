@@ -1,46 +1,6 @@
 [
  {
-  "directory": "/home/andre.kovalski/aulas/corba/Conta/cliente",
-  "arguments": [
-   "g++",
-   "-D_GNU_SOURCE",
-   "-DACE_HAS_CUSTOM_EXPORT_MACROS=0",
-   "-I../idl",
-   "-I/opt/ACE_wrappers",
-   "-I/opt/ACE_wrappers/TAO",
-   "-I/opt/ACE_wrappers/TAO/orbsvcs",
-   "-I../common",
-   "-Wnon-virtual-dtor",
-   "-std=c++20",
-   "-c",
-   "-o",
-   "../idl/ContaC.o",
-   "../idl/ContaC.cpp"
-  ],
-  "file": "../idl/ContaC.cpp"
- },
- {
-  "directory": "/home/andre.kovalski/aulas/corba/Conta/cliente",
-  "arguments": [
-   "g++",
-   "-D_GNU_SOURCE",
-   "-DACE_HAS_CUSTOM_EXPORT_MACROS=0",
-   "-I../idl",
-   "-I/opt/ACE_wrappers",
-   "-I/opt/ACE_wrappers/TAO",
-   "-I/opt/ACE_wrappers/TAO/orbsvcs",
-   "-I../common",
-   "-Wnon-virtual-dtor",
-   "-std=c++20",
-   "-c",
-   "-o",
-   "cliente.o",
-   "cliente.cpp"
-  ],
-  "file": "cliente.cpp"
- },
- {
-  "directory": "/home/andre.kovalski/aulas/corba/Logger/cliente",
+  "directory": "/home/andre.kovalski/aulas/corba/Corba-logger/cliente",
   "arguments": [
    "g++",
    "-D_GNU_SOURCE",
@@ -60,7 +20,7 @@
   "file": "../idl/LoggerC.cpp"
  },
  {
-  "directory": "/home/andre.kovalski/aulas/corba/Logger/cliente",
+  "directory": "/home/andre.kovalski/aulas/corba/Corba-logger/cliente",
   "arguments": [
    "g++",
    "-D_GNU_SOURCE",

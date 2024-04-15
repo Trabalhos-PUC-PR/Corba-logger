@@ -25,8 +25,8 @@
 // TAO_IDL - Generated from
 // /opt/ACE_wrappers/TAO/TAO_IDL/be/be_codegen.cpp:1567
 
-#ifndef LOGGERI_NGWPAI_H_
-#define LOGGERI_NGWPAI_H_
+#ifndef LOGGERI_TS2C59_H_
+#define LOGGERI_TS2C59_H_
 
 #include "LoggerS.h"
 

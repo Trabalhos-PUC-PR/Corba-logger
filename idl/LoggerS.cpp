@@ -25,8 +25,8 @@
 // TAO_IDL - Generated from
 // /opt/ACE_wrappers/TAO/TAO_IDL/be/be_codegen.cpp:631
 
-#ifndef _TAO_IDL____IDL_LOGGERS_CCPXRM_CPP_
-#define _TAO_IDL____IDL_LOGGERS_CCPXRM_CPP_
+#ifndef _TAO_IDL_LOGGERS_5RPZCU_CPP_
+#define _TAO_IDL_LOGGERS_5RPZCU_CPP_
 
 
 #include "LoggerS.h"
