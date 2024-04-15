@@ -7,30 +7,44 @@
 //
 
 #include <iostream>
-#include "LoggerC.h"  // stub
+#include "LoggerC.h"
+#include "tao/String_Alloc.h"
+#include <orbsvcs/CosNamingC.h>
 
 using namespace std;
 using namespace CORBA;
+using namespace CosNaming;
 
 int main(int argc, char* argv[])
 {
-    try {
-	    // 1. Inicializa ORB
-        ORB_var orb = ORB_init(argc, argv, "ORB");
+	if (argc < 2) {
+		cerr << "USO: "<<argv[0]<<" file://<ior_file>"<<endl;
+	}
 
-	    // 2. Obtém referência para objeto distirbuído (da IOR)
-				Object_ptr ref = orb->string_to_object(argv[1]);
-        auto logger = Logger::_narrow(ref);
+	try {
+		// 1. Inicializa ORB
+		ORB_var orb = ORB_init(argc, argv, "ORB");
 
-			// 3. Usa objeto (chama métodos)
-			logger->log(Severidade::DEBUG, "sim", 12, "horario", "log");
-			
+		// 2. Obtém referêencia para o objeto distribuido
+		Object_ptr ref;
+		Logger_var log;
 
-	    // 4. Finalizações
-        orb->destroy();
-    } catch (const Exception& e) {
-        cerr << "ERRO CORBA: " << e << endl;
-    }
+		ref = orb->string_to_object(argv[1]);
+		NamingContext_var sn = NamingContext::_narrow(ref);
 
-	return 0;
+		Name nome(1);
+		nome.length(1);
+		nome[0].id = string_dup(argv[1]);
+
+		ref = sn->resolve(nome);
+
+		log = Logger::_narrow(ref);
+
+		// 3. Usa log
+
+
+	} catch (CORBA::Exception& e) {
+		cerr << "CORBA EXCEPTION: "<<e<<endl;
+	}
+
 }

@@ -8,7 +8,7 @@ include $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
 # Parâmetros:
 #
 
-PROJECT = Logger
+PROJECT = cliente_logger
 SERVER = false
 
 IDL.idl = Logger.idl
